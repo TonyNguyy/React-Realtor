@@ -1,9 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
-import { getAuth } from 'firebase/auth';
+import { getAuth, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { updateProfile } from 'firebase/auth';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -11,10 +10,10 @@ export default function Profile() {
 
   const auth = getAuth()
   const navigate = useNavigate();
-  const {changeDetail, setChangeDetail} = useState(false);
+  const [changeDetail, setChangeDetail] = useState(false);
   const [formData, setFormData] = useState({
-    name: auth.currentUser.displayname,
-    email:auth.curentUser.email
+    name: auth.currentUser.displayName,
+    email: auth.currentUser.email,
   });
   const {name,email} = formData;
 
@@ -26,7 +25,7 @@ export default function Profile() {
   function onChange(e){
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.id]:e.target.value,
+      [e.target.id]: e.target.value,
     }))
   }
 
@@ -54,7 +53,7 @@ export default function Profile() {
     <>
       <section className='flex justify-center items-center flex-col max-w-6xl mx-auto'>
         <h1 className='text-3xl text-center mt-6 font-bold'>My Profile</h1>
-        <div className='w-full md: w-[50%] mt-6 px-3'>
+        <div className='w-full md:w-[50%] mt-6 px-3'>
           <form>
             {/* Name Input */}
             <input type="text" id="name" value={name} disabled={!changeDetail}
@@ -72,8 +71,10 @@ export default function Profile() {
                 <span 
                 onClick={() =>{
                   changeDetail && onSubmit();
-                  setChangeDetail((prevState)=> !prevState);
+                  setChangeDetail((prevState) => !prevState);
                 }}
+                  
+              
                 className='text-red-600 hover:text-red-800 transition ease-in-out
                 duration-300 ml-1 cursor-pointer'>
                   {changeDetail ? "Apply change" : "Edit"}</span>
