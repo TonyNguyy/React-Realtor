@@ -52,7 +52,7 @@ export default function CreateListing() {
   } = formData;
   function onChange(e) {
     let boolean = null;
-    if (e.target.value === "true"){
+    if (e.target.value === "true") {
       boolean = true;
     }
     if (e.target.value === "false") {
